@@ -44,7 +44,7 @@ public class CVFS
             catch(Exception e) {System.out.println(e.getMessage());}
         }
     }
-    
+
     /**
      * print out the CVFS command manual
      */
@@ -89,7 +89,7 @@ public class CVFS
         String[] lastCmds = processStack.pop().split(" ");
         if(lastCmds[0].equalsIgnoreCase("newdoc") || lastCmds[0].equalsIgnoreCase("newdir") || lastCmds[0].equalsIgnoreCase("touch") || lastCmds[0].equalsIgnoreCase("mkdir"))
         {
-             commandLineMatch("delete " + lastCmds[1], undo);
+            commandLineMatch("delete " + lastCmds[1], undo);
         }
         if(lastCmds[0].equalsIgnoreCase("delete") || lastCmds[0].equalsIgnoreCase("rm"))
         {
@@ -343,6 +343,7 @@ public class CVFS
                 break;
             case "newnegation":
                 if(cmds.length != 3) throw new IllegalArgumentException("NewNegation requires at least two arguments");
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
                 if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
                 Criteria output = Criteria.newNegation(cmds[1],criteriaMap.get(cmds[2]));
                 criteriaMap.put(cmds[1],output);
@@ -351,6 +352,7 @@ public class CVFS
                 break;
             case "newbinarycri":
                 if(cmds.length != 5) throw new IllegalArgumentException("NewBinaryCri requires at least four arguments");
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
                 if(criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
                 else if(criteriaMap.containsKey(cmds[3])) throw new IllegalArgumentException("The criterion" + cmds[3] + " does not exist");
                 Criteria cri3 = criteriaMap.get(cmds[2]),cri4 = criteriaMap.get(cmds[4]);
@@ -379,7 +381,7 @@ public class CVFS
             case "help":
                 if(cmds.length > 1) throw new IllegalArgumentException("Command help should have no argument");
                 helpManual();
-                break;    
+                break;
             default:
                 throw new IllegalArgumentException("Unknown command");
 
