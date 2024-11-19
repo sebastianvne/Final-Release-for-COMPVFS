@@ -154,13 +154,14 @@ public class CVFS
                 reverseDo(true,undoStack,tempTrashStack);
                 break;
             case "redo":
-            {
                 reverseDo(false,redoStack,tempRestoreStack);
                 break;
-            }
             case "newdisk":
                 if(cmds.length != 2) throw new IllegalArgumentException("New disk requires exactly one argument.");
-                currentDisk = new Disk(Integer.parseInt(cmds[1]));
+                int disksize = 0;
+                try{disksize = Integer.parseInt(cmds[1]);}
+                catch(Exception e) {throw new IllegalArgumentException("The disk size should be a number");}
+                currentDisk = new Disk(disksize);
                 System.out.println("New disk successfully created with size of "+cmds[1]);
                 break;
             case "touch":
