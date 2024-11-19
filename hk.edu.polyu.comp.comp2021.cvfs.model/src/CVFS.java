@@ -53,7 +53,7 @@ public class CVFS
         System.out.printf("%-18s%-35s%-100s%n","<command>","[argument(s)]","{function}");
         System.out.printf("%-18s%-35s%-100s%n","newDisk","diskSize","Creates a disk with the maximum size of diskSize, diskSize should be a positive integer");
         System.out.printf("%-18s%-35s%-100s%n","newDoc or touch","docName docType docContent","Creates a new document in the working directory with the specified name, ");
-        System.out.printf("%-53s%-100s%n","","  type, and content, doctype should be 'txt','java','html' or 'css'");
+        System.out.printf("%-53s%-100s%n","","  type, and content, doctype should be \"txt\",\"java\",\"html\" or \"css\"");
         System.out.printf("%-18s%-35s%-100s%n","newDir or mkdir","dirName","Creates a new directory in the working directory with the specified name");
         System.out.printf("%-18s%-35s%-100s%n","delete or rm","fileName","Delete an existing file with the specified name from the working directory");
         System.out.printf("%-18s%-35s%-100s%n","rename or mv","oldFileName newFileName","Rename an existing file in the working directory from oldFileName to new FileName");
@@ -63,9 +63,9 @@ public class CVFS
         System.out.printf("%-18s%-35s%-100s%n","rList","*none","Lists all the files contained in the working directory");
         System.out.printf("%-18s%-35s%-100s%n","newSimpleCri","criName attrName op val","Constructs a simple criterion named criName, ");
         System.out.printf("%-53s%-100s%n","","  criName is IsDocument or contains exactly two English letters, when it is IsDocument, there should be no argument afterwards");
-        System.out.printf("%-53s%-100s%n","","  attrName is either name, type, or size. If attrName is name, op must be contains and val must be a string in the double quote;");
-        System.out.printf("%-53s%-100s%n","","  If attrName is type, op must be equals and val must be a string in the double quote, which could be 'txt','java','html' or 'css';");
-        System.out.printf("%-53s%-100s%n","","  If attrName is size, op can be >, <, >=, <=, ==, or !=, and val must be an integer");
+        System.out.printf("%-53s%-100s%n","","  attrName is either name, type, or size. If attrName is \"name\", op must be contains and val must be a string in the double quote;");
+        System.out.printf("%-53s%-100s%n","","  If attrName is \"type\", op must be equals and val must be a string in the double quote, which could be \"txt\",\"java\",\"html\" or \"css\";");
+        System.out.printf("%-53s%-100s%n","","  If attrName is \"size\", op can be >, <, >=, <=, ==, or !=, and val must be an integer");
         System.out.printf("%-18s%-35s%-100s%n","newNegation","criName1 criName2","Constructs a criterion named criName1, which is the negation of an existing criterion named criName2");
         System.out.printf("%-18s%-35s%-100s%n","newBinaryCri","criName1 criName3 logicOp criName4","Constructs a composite criterion named criName1, which is generated using existing criteria criName3 and criName4, logicOp is either && or ||");
         System.out.printf("%-18s%-35s%-100s%n","printAllCriteria","*none","Print out all the criteria defined");
