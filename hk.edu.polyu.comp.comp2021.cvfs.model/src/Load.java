@@ -1,38 +1,29 @@
-import java.nio.file.*;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
-/**
- * Load class that can do load manipulations
- */
 public class Load {
 
-    final private Disk currentDisk;
-
-    /**
-     * construction method
-     * @param currentDisk the disk that local files should be loaded to
-     */
+    private Disk currentDisk;
     Load(Disk currentDisk){
         this.currentDisk = currentDisk;
     }
 
-    /**
-     * activate method
-     * @param path the local path where the files should be loaded.
-     */
+
     public void load(String path){
+
         Inload(path,currentDisk.getRootDir());
 
     }
 
-    /**
-     * recursively load
-     * @param path  the local path where the files should be loaded.
-     * @param dir current directory
-     */
     public void Inload(String path, Directory dir){
-        Path localpath=Paths.get(path);
+        //path是local的文件
+        //dir是写入的虚拟文件系统的dir
+        Path Abspath=Paths.get(path);
+        Path localpath=Abspath.toAbsolutePath();
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(localpath)) {
             for (Path p : stream) {
@@ -74,6 +65,7 @@ public class Load {
                     currentDisk.setCwd(currentDisk.getCwd().getParentDir());
                 }
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
