@@ -293,6 +293,7 @@ public class CVFS
                 break;
             case "newsimplecri":
                 if(cmds.length != 5 && cmds.length != 2) throw new IllegalArgumentException("Invalid input for NewSimpleCri");
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
                 else if(cmds.length == 2){
                     Criteria criteria = new Criteria(cmds[1]);
                     criteriaMap.put(cmds[1],criteria);
