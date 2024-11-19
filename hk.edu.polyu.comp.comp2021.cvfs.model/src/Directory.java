@@ -1,9 +1,20 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Directory class, means directory in disk, extends from file class.
+ */
 public class Directory extends File
 {
-    private Map<String,File> files;
+    final private Map<String,File> files;
+    final private Directory parentDir;
+
+    /**
+     * construction method.
+     * @param name directory name that can be search
+     * @param parentDisk indicates the disk that the directory belongs to
+     * @param parentDir indicates its parent directory.
+     */
     Directory(String name,Disk parentDisk,Directory parentDir)//init of root dir
     {
         this.name=name;
@@ -13,6 +24,11 @@ public class Directory extends File
         this.parentDir = parentDir;
     }
 
+    /**
+     *
+     * @param name to be search the directory
+     * @return a File object, if the file can be found
+     */
     public File search(String name)
     {
         for(File file:files.values())
@@ -22,47 +38,73 @@ public class Directory extends File
         return null;
     }
 
+    /**
+     * get the directory's parent directory
+     * @return return the parentdir, a Directory object
+     */
+    public Directory getParentDir(){return parentDir;}
+    /**
+     * get all the files belongs to the directory.
+     * @return return a map that contains all the files(Documents,Directories) in the directory.
+     */
     public Map<String,File> getFiles(){return files;}
-    public void setFiles(Map<String,File> files){this.files = files;}
 
+
+
+    /**
+     * search if the current directory have the searched file directly.
+     * @param name the file to be searched
+     * @return if there is such a file.
+     */
     public boolean isExistFile(String name) {return files.containsKey(name);}
-    public boolean isExistSubDirectory()
-    {
-        for(File file : files.values()) if(file.isDirectory()) return true;
-        return false;
-    }
-    public boolean isExistSubDoc()
-    {
-        for(File file : files.values()) if(file.isDocument()) return true;
-        return false;
-    }
+
+    /**
+     * calculate the size of the whole directory recursively, update the child files' size and return it.
+     * @return return the size of the directory.
+     */
+    @Override
     public int calculateSize()
     {
-        int size = 40;
         //if(!isExistSubDirectory()) return size;
         for(File file : files.values())
         {
-            file.size = file.calculateSize();
-            size+=file.size;
+            file.setSize(file.calculateSize());
+            size+=file.getSize();
         }
         return size;
     }
 
+    /**
+     * newdoc method
+     * @param docName document name for docs should be created
+     * @param docType document type
+     * @param docContent document contents, we get size with that.
+     */
     public void newDoc(String docName,String docType,String docContent)
     {
         if(isExistFile(docName)) throw new IllegalArgumentException("Document already exists");
-        Directory docDirectory = this;
-        Document doc = new Document(docName,docType,docContent,docDirectory);
+        Document doc = new Document(docName,docType,docContent);
         if(parentDisk.getRootDir().getSize()+ doc.getSize()>parentDisk.getDiskSize()) throw new IllegalArgumentException("The disk cannot have the file due to size");
         files.put(docName,doc);
-        this.parentDisk.getRootDir().size = parentDisk.getRootDir().calculateSize();
+        this.parentDisk.getRootDir().setSize(parentDisk.getRootDir().calculateSize());
     }
+
+    /**
+     * delete files(Document and Directory)
+     * @param name the name of the file to be deleted
+     */
     public void deleteFile(String name)
     {
-        if (isExistFile(name) ) files.remove(name);
+        if (isExistFile(name)) files.remove(name);
         else throw new IllegalArgumentException("The file does not exist");
-        this.parentDisk.getRootDir().size = parentDisk.getRootDir().calculateSize();
+        this.parentDisk.getRootDir().setSize(parentDisk.getRootDir().calculateSize());
     }
+
+    /**
+     * rename a certaian file
+     * @param oldFileName origin file name of a certain file
+     * @param newFileName new file name to be given for a certain file
+     */
     public void renameFile(String oldFileName, String newFileName)
     {
         if (isExistFile(oldFileName))
@@ -75,6 +117,11 @@ public class Directory extends File
         }
         else throw new IllegalArgumentException("The file does not exist.");
     }
+
+    /**
+     * construct a directory
+     * @param name the name of the new directory
+     */
     public void newDirectory(String name)
     {
         if (isExistFile(name)) throw new IllegalArgumentException("The directory already exists.");
@@ -82,6 +129,6 @@ public class Directory extends File
         int tempsize = newdirectory.calculateSize();
         if (parentDisk.getRootDir().getSize()+tempsize> parentDisk.getDiskSize()) throw new IllegalArgumentException("The disk cannot have the file due to size");
         files.put(name,newdirectory);
-        this.parentDisk.getRootDir().size = parentDisk.getRootDir().calculateSize();
+        this.parentDisk.getRootDir().setSize(parentDisk.getRootDir().calculateSize());
     }
 }
