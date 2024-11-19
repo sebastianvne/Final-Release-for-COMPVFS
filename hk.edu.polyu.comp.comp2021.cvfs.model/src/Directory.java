@@ -65,7 +65,7 @@ public class Directory extends File
     @Override
     public int calculateSize()
     {
-        //if(!isExistSubDirectory()) return size;
+        int size = INIT_SIZE;
         for(File file : files.values())
         {
             file.setSize(file.calculateSize());

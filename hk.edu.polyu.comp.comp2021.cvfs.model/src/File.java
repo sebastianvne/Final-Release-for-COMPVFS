@@ -14,7 +14,7 @@ public class File
     /**
      * protected variable, only its child can access
      */
-    protected int size;
+    protected int size = INIT_SIZE;
     /**
      * protected variable, only its child can access
      */

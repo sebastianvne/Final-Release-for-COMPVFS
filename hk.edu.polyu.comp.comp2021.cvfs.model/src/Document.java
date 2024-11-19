@@ -28,7 +28,7 @@ public class Document extends File //extends File
         this.name=name;
         this.type = type;
         this.content = content;
-        this.size = calculateSize(content);
+        this.size = calculateSize();
     }
 
     /**
@@ -57,18 +57,6 @@ public class Document extends File //extends File
         }
         return false;
     }
-
-    /**
-     * calculate the size of a doc
-     * @param content doc's content
-     * @return the calculated size
-     */
-    public int calculateSize(String content)
-    {
-        final int INIT_SIZE = 40;
-        return INIT_SIZE + (content != null ? content.length() * 2-2 : 0);
-    }
-
     /**
      * override the file's calculate method, activate calculate
      * @return the calculated size
@@ -76,6 +64,6 @@ public class Document extends File //extends File
     @Override
     public int calculateSize()
     {
-        return calculateSize(this.content);
+        return INIT_SIZE + (content != null ? content.length() * 2-2 : 0);
     }
 }
