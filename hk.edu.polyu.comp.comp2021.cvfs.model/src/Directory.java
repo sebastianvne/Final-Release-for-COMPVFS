@@ -107,6 +107,10 @@ public class Directory extends File
      */
     public void renameFile(String oldFileName, String newFileName)
     {
+        if (!(newFileName != null && newFileName.matches("^[a-zA-Z0-9]{1,10}$") && newFileName.length()<=10))
+        {
+            throw new IllegalArgumentException("Invalid file name.");
+        }
         if (isExistFile(oldFileName))
         {
             if(isExistFile(newFileName)) throw new IllegalArgumentException("File already exists");
