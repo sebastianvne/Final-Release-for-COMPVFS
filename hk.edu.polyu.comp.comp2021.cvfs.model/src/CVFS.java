@@ -192,6 +192,7 @@ public class CVFS
                 int disksize = 0;
                 try{disksize = Integer.parseInt(cmds[1]);}
                 catch(Exception e) {throw new IllegalArgumentException("The disk size should be a number");}
+                if(disksize<40) throw new IllegalArgumentException("The disk size is too small to initialize its root directory");
                 currentDisk = new Disk(disksize);
                 System.out.println("New disk successfully created with size of "+cmds[1]);
                 break;
@@ -279,8 +280,9 @@ public class CVFS
             case "cd":
             case "changedir":
                 File lastDir = currentDisk.getCwd();
-                if(cmds.length==1) currentDisk.changeDirectory("");
-                else currentDisk.changeDirectory(cmds[1]);
+                if(cmds.length == 1) currentDisk.changeDirectory("");
+                if(cmds.length == 2)currentDisk.changeDirectory(cmds[1]);
+                else throw new IllegalArgumentException("Too much arguments.");
                 if(!rec)
                 {
                     undoStack.push(command);
