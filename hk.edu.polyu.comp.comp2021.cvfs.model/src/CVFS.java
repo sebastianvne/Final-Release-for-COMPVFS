@@ -356,7 +356,7 @@ public class CVFS
                 if(cmds.length != 5) throw new IllegalArgumentException("NewBinaryCri requires at least four arguments");
                 if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
                 if(！criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
-                else if(！criteriaMap.containsKey(cmds[3])) throw new IllegalArgumentException("The criterion" + cmds[3] + " does not exist");
+                else if(！criteriaMap.containsKey(cmds[4])) throw new IllegalArgumentException("The criterion" + cmds[4] + " does not exist");
                 Criteria cri3 = criteriaMap.get(cmds[2]),cri4 = criteriaMap.get(cmds[4]);
                 Criteria newcri = Criteria.newBinaryCri(cmds[1],cri3,cmds[3],cri4);
                 criteriaMap.put(cmds[1],newcri);
