@@ -61,9 +61,8 @@ public class Document extends File //extends File
      * override the file's calculate method, activate calculate
      * @return the calculated size
      */
-    @Override
-    public int calculateSize()
-    {
-        return INIT_SIZE + (content != null ? content.length() * 2-2 : 0);
-    }
+        public int calculateSize()
+        {
+            return INIT_SIZE + (content != null ? content.length() * 2-2 : 0);
+        }
 }
