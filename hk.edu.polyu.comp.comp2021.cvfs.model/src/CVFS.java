@@ -190,10 +190,10 @@ public class CVFS
         switch (cmds[0].toLowerCase())
         {
             case "undo":
-                reverseDo(true,undoStack,tempTrashStack);
+                if(cmds.length == 1) reverseDo(true,undoStack,tempTrashStack);
                 break;
             case "redo":
-                reverseDo(false,redoStack,tempRestoreStack);
+                if(cmds.length == 1)reverseDo(false,redoStack,tempRestoreStack);
                 break;
             case "newdisk":
                 if(cmds.length != 2) throw new IllegalArgumentException("New disk requires exactly one argument.");
