@@ -244,11 +244,11 @@ public class CVFS
                 break;
             case "ls":
             case "list":
-                if(cmds.length != 1) throw new IllegalArgumentException("Too much arguments");
+                if(cmds.length != 1) throw new IllegalArgumentException("Too many arguments");
                 currentDisk.rList(0,false,null);
                 break;
             case "rlist":
-                if(cmds.length != 1) throw new IllegalArgumentException("Too much arguments");
+                if(cmds.length != 1) throw new IllegalArgumentException("Too many arguments");
                 currentDisk.rList(0,true,null);
                 break;
             case "rm":
@@ -290,7 +290,7 @@ public class CVFS
                 File lastDir = currentDisk.getCwd();
                 if(cmds.length == 1) currentDisk.changeDirectory("");
                 else if(cmds.length == 2)currentDisk.changeDirectory(cmds[1]);
-                else throw new IllegalArgumentException("Too much arguments.");
+                else throw new IllegalArgumentException("Too many arguments.");
                 if(!rec)
                 {
                     undoStack.push(command);
