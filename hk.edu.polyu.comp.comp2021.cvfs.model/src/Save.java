@@ -26,10 +26,13 @@ public class Save {
     public void save(String path) throws IOException {
 
         Directory rootDir = currentDisk.getRootDir();
-        Path srcPath = Paths.get("src");
-        String parentPath = srcPath.toAbsolutePath().getParent().toString();
-        String AbsPath=parentPath+"/"+path;
-        savein(AbsPath, rootDir);
+        Path relativepath=Paths.get("./hk.edu.polyu.comp.comp2021.cvfs.model/"+path);
+        Path localpath=relativepath.toAbsolutePath().normalize();
+        path=localpath.toString();
+//?
+        savein(path, rootDir);
+
+
     }
 
     public void savein(String path, Directory dir) throws IOException {
@@ -57,9 +60,8 @@ public class Save {
                 }
                 String filepath = Paths.get(path, file.getName() + "." + ((Document) file).getType()).toString();
                 Path Thispath = Paths.get(filepath);
-
-
                 String content = ((Document) file).getContent();
+
                 try {
                     if (Files.notExists(Thispath)) {
                         Files.createFile(Thispath);
@@ -80,9 +82,4 @@ public class Save {
                 String filepath = Paths.get(path, file.getName()).toString();
                 Path Thispath = Paths.get(filepath);
                 Files.createDirectories(Thispath);
-                savein(filepath, (Directory) file);
-            }
-        }
-    }
-}
-
+                savein(filepath, (Directory) file);}}}}

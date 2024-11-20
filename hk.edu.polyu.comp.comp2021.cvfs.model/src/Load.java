@@ -14,16 +14,17 @@ public class Load {
 
 
     public void load(String path){
-
-        Inload(path,currentDisk.getRootDir());
+        Path relativepath=Paths.get("./hk.edu.polyu.comp.comp2021.cvfs.model/"+path);
+        Path localpath=relativepath.toAbsolutePath().normalize();
+        Inload(localpath.toString(),currentDisk.getRootDir());
 
     }
 
     public void Inload(String path, Directory dir){
         //path是local的文件
         //dir是写入的虚拟文件系统的dir
-        Path Abspath=Paths.get(path);
-        Path localpath=Abspath.toAbsolutePath();
+        Path localpath=Paths.get(path);
+
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(localpath)) {
             for (Path p : stream) {
@@ -50,6 +51,7 @@ public class Load {
             throw new RuntimeException(e);
         }
 
+
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(localpath)) {
             for (Path p : stream) {
                 if(Files.isDirectory(p)){
@@ -59,7 +61,7 @@ public class Load {
                     dir.newDirectory(Stringname);
 
                     currentDisk.changeDirectory(Stringname);
-                    String newpath=path+"/"+Stringname;
+                    String newpath=localpath.toString()+"/"+Stringname;
 
                     Inload(newpath,currentDisk.getCwd());
                     currentDisk.setCwd(currentDisk.getCwd().getParentDir());
