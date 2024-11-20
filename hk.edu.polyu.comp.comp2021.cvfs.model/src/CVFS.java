@@ -236,12 +236,12 @@ public class CVFS
                 break;
             case "ls":
             case "list":
+                if(cmds.length != 1) throw new IllegalArgumentException("Too much arguments");
                 currentDisk.rList(0,false,null);
-                //System.out.println("Total number of files: "+summary[0]+", total size:"+(summary[1]-40));
                 break;
             case "rlist":
+                if(cmds.length != 1) throw new IllegalArgumentException("Too much arguments");
                 currentDisk.rList(0,true,null);
-                //System.out.println("Total number of files: "+all[0]+", total size:"+(all[1]-40));
                 break;
             case "rm":
             case "delete":
