@@ -82,7 +82,7 @@ public class Directory extends File
      */
     public void newDoc(String docName,String docType,String docContent)
     {
-        if(isExistFile(docName)) throw new IllegalArgumentException("Document already exists");
+        if(isExistFile(docName)) throw new IllegalArgumentException("A file with the same name already exists");
         Document doc = new Document(docName,docType,docContent);
         if(parentDisk.getRootDir().getSize()+ doc.getSize()>parentDisk.getDiskSize()) throw new IllegalArgumentException("The disk cannot have the file due to size");
         files.put(docName,doc);
@@ -107,11 +107,8 @@ public class Directory extends File
      */
     public void renameFile(String oldFileName, String newFileName)
     {
-        if (!(newFileName != null && newFileName.matches("^[a-zA-Z0-9]{1,10}$") && newFileName.length()<=10))
-        {
-            throw new IllegalArgumentException("Invalid file name.");
-        }
-        if (isExistFile(oldFileName))
+        if(!isValidFileName(newFileName)) throw new IllegalArgumentException("New file name invalid.");
+        if (isExistFile(oldFileName) )
         {
             if(isExistFile(newFileName)) throw new IllegalArgumentException("File already exists");
             File tempDoc = files.get(oldFileName);
@@ -128,7 +125,7 @@ public class Directory extends File
      */
     public void newDirectory(String name)
     {
-        if (isExistFile(name)) throw new IllegalArgumentException("The directory already exists.");
+        if (isExistFile(name)) throw new IllegalArgumentException("A File with the same name already exists.");
         Directory newdirectory = new Directory(name,parentDisk,this);
         int tempsize = newdirectory.calculateSize();
         if (parentDisk.getRootDir().getSize()+tempsize> parentDisk.getDiskSize()) throw new IllegalArgumentException("The disk cannot have the file due to size");

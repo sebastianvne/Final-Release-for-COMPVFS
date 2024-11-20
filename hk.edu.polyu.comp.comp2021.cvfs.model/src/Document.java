@@ -18,13 +18,8 @@ public class Document extends File //extends File
      */
     public Document(String name,String type,String content) throws IllegalArgumentException
     {
-        if (!(name != null && name.matches("^[a-zA-Z0-9]{1,10}$") && name.length()<=10))
-        {
-            throw new IllegalArgumentException("Invalid file name.");
-        }
-        if (!isValidFileType(type)) {
-            throw new IllegalArgumentException("Invalid file type.");
-        }
+        if(!isValidFileName(name)) throw new IllegalArgumentException("The file name is invalid.");
+        if (!isValidFileType(type)) throw new IllegalArgumentException("Invalid file type.");
         this.name=name;
         this.type = type;
         this.content = content;

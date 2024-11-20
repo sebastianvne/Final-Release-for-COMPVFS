@@ -52,4 +52,14 @@ public class File
     {
         return INIT_SIZE;
     }
+
+    /**
+     * To detect if the file has the correct name format.
+     * @param fileName the file name to detect
+     * @return if the file name is valid.
+     */
+    public boolean isValidFileName(String fileName)
+    {
+       return fileName != null && fileName.matches("^[a-zA-Z0-9]{1,10}$") && fileName.length() <= 10;
+    }
 }
