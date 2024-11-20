@@ -5,20 +5,37 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+/**
+ * load class to load the files in the local computer into the virtual file system
+ */
 public class Load {
 
     private Disk currentDisk;
+
+    /**
+     * accept two argument
+     * @param currentDisk current disk create in the system
+     */
     Load(Disk currentDisk){
         this.currentDisk = currentDisk;
     }
 
-
+    /**
+     * start up function of load
+     * @param path it is the name of destiny directory
+     */
     public void load(String path){
         Path relativepath=Paths.get("./hk.edu.polyu.comp.comp2021.cvfs.model/"+path);
         Path localpath=relativepath.toAbsolutePath().normalize();
         Inload(localpath.toString(),currentDisk.getRootDir());
 
     }
+
+    /**
+     * accept the parameters from load.
+     * @param path it is the relative path of destiny directory
+     * @param dir  it is the current directory
+     */
 
     public void Inload(String path, Directory dir){
         //path是local的文件

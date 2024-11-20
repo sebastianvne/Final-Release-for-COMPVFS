@@ -4,7 +4,7 @@ import java.util.*;
  */
 public class CVFS
 {
-
+    private final int INIT_SIZE = 40;
     private Disk currentDisk;
     final private HashMap<String,Criteria> criteriaMap = new HashMap<>();
     final private Stack<String> undoStack = new Stack<>();
@@ -200,7 +200,7 @@ public class CVFS
                 int disksize = 0;
                 try{disksize = Integer.parseInt(cmds[1]);}
                 catch(Exception e) {throw new IllegalArgumentException("The disk size should be a number");}
-                if(disksize<40) throw new IllegalArgumentException("The disk size is too small to initialize its root directory");
+                if(disksize<INIT_SIZE) throw new IllegalArgumentException("The disk size is too small to initialize its root directory");
                 currentDisk = new Disk(disksize);
                 System.out.println("New disk successfully created with size of "+cmds[1]);
                 break;
@@ -362,15 +362,10 @@ public class CVFS
                 break;
             case "newbinarycri":
                 if(cmds.length != 5) throw new IllegalArgumentException("NewBinaryCri requires at least four arguments");
-<<<<<<< Updated upstream
-                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
-                if(！criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
-                else if(！criteriaMap.containsKey(cmds[4])) throw new IllegalArgumentException("The criterion" + cmds[4] + " does not exist");
-=======
                 if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " already exists");
                 if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion "+ cmds[2] + " does not exist");
                 else if(!criteriaMap.containsKey(cmds[4])) throw new IllegalArgumentException("The criterion " + cmds[4] + " does not exist");
->>>>>>> Stashed changes
+
                 Criteria cri3 = criteriaMap.get(cmds[2]),cri4 = criteriaMap.get(cmds[4]);
                 Criteria newcri = Criteria.newBinaryCri(cmds[1],cri3,cmds[3],cri4);
                 criteriaMap.put(cmds[1],newcri);

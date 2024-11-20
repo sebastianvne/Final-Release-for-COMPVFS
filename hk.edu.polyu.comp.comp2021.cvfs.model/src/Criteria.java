@@ -60,10 +60,10 @@ public class Criteria {
         if(!(criName.matches("^[A-Za-z]{2}$"))){
             throw new IllegalArgumentException("The Criteria name should contain exactly two letters");
         }
-        else if (!(attrName.equals("name") && op.equals("contains") && (( val).matches("^\".*\"$")))
-                && !(attrName.equals("type") && op.equals("equals") && (( val).matches("^\".*\"$")))
-                && !(attrName.equals("name") && op.equals("not contains") && (( val).matches("^\".*\"$")))
-                && !(attrName.equals("type") && op.equals("not equals") && (( val).matches("^\".*\"$")))
+        else if (!(attrName.equalsIgnoreCase("name") && op.equalsIgnoreCase("contains") && (( val).matches("^\".*\"$")))
+                && !(attrName.equalsIgnoreCase("type") && op.equalsIgnoreCase("equals") && (( val).matches("^\".*\"$")))
+                && !(attrName.equalsIgnoreCase("name") && op.equalsIgnoreCase("not contains") && (( val).matches("^\".*\"$")))
+                && !(attrName.equalsIgnoreCase("type") && op.equalsIgnoreCase("not equals") && (( val).matches("^\".*\"$")))
                 && !(isInteger(val) && int_op > 1 && attrName.equals("size"))
         ) {
             throw new IllegalArgumentException("Wrong input format");

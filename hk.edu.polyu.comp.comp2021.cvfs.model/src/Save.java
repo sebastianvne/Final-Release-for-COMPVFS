@@ -5,15 +5,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-
+/**
+ * Save Class, do save implementations
+ */
 public class Save {
     private Disk currentDisk;
     private Map<String,File> FileMap;
     private int count=0;
+
+    /**
+     * Save:used to accept two argument
+     * @param currentDisk it is the disk create before.
+     */
     Save(Disk currentDisk)
     {
         this.currentDisk = currentDisk;
     }
+
+    /**
+     * Save: used to accept three argument
+     * @param currentDisk it is the disk create before.
+     * @param fileMap filemap contains the files that should be saved
+     */
     Save(Disk currentDisk, Map<String,File> fileMap)
     {
         this.currentDisk = currentDisk;
@@ -22,7 +35,11 @@ public class Save {
 
     }
 
-
+    /**
+     * start-up function
+     * @param path  get the name of directory that you want to save in.
+     * @throws IOException  considering IO runtime error
+     */
     public void save(String path) throws IOException {
 
         Directory rootDir = currentDisk.getRootDir();
@@ -34,6 +51,13 @@ public class Save {
 
 
     }
+
+    /**
+     * accept parameters from save, and realise the method.
+     * @param path relative path, get from the save.
+     * @param dir   current directory.
+     * @throws IOException considering IO runtime error
+     */
 
     public void savein(String path, Directory dir) throws IOException {
 
