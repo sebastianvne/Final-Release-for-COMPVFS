@@ -23,6 +23,8 @@ public class Criteria {
      * @param criName is the criName of the new Criteria object, and it must be "IsDocument".
      * @throws IllegalArgumentException if criName is not "IsDocument".
      */
+
+
     public Criteria(String criName)
     {
         if(!criName.equals("IsDocument")){
@@ -149,35 +151,6 @@ public class Criteria {
         catch (NumberFormatException e) { return false; }
     }
 
-    /**
-     * print out the attrName, op, and val field of a simple Criteria object created,
-     * if the object is a composite criteria, the method will call itself recursively until it print out all the simple criteria that participates in the composition of the composite Criteria object.
-     */
-    public void getAllCriteria(){
-        if(this.isCompos()){
-            System.out.print("(");
-            this.getCompositeC1().getAllCriteria();
-            System.out.print(this.getOp() + " ");
-            this.getCompositeC2().getAllCriteria();
-            System.out.print(")");
-        }
-        else{
-            System.out.print(this.getAttrName() + " ");
-            System.out.print(this.getOp() + " ");
-            System.out.print(this.getVal() + " ");
-        }
-    }
-
-    /**
-     * print out the criteria name, if its name is IsDocument, print "IsDocument", otherwise, call the method getAllCriteria().
-     */
-    public void printAllCriteria(){
-        if(Objects.equals(this.getCriName(), "IsDocument")) System.out.println(this.getCriName() + " ");
-        else {
-            System.out.print(this.getCriName() + " ");
-            this.getAllCriteria();
-        }
-    }
 
     /**
      * call the constructor which constructs a new composite Criteria object
@@ -297,14 +270,47 @@ public class Criteria {
      * @param lop logic operator connects compositeC1 and compositeC2.
      * @return returns the truth value of (compositeC1 lop compositeC2).
      */
-    public boolean composCheck(boolean result1, boolean result2, String lop) {
+    public boolean composCheck(boolean result1, boolean result2, String lop)
+    {
+        boolean out = false;
         switch (lop) {
             case "&&":
-                return result1 && result2;
+                out = result1 && result2;
             case "||":
-                return result1 || result2;
+                out = result1 || result2;
         }
-        return false;
+        return out;
     }
+
+    /**
+     * override the toString method, get criteria to be the String.
+     * @return String, the criteria's String
+     */
+    @Override
+    public String toString() {
+        String end = "";
+        if (this.isCompos()) {
+            end += "(";
+            end += this.getCompositeC1().toString();
+            end += (this.getOp() + " ");
+            end += this.getCompositeC2().toString();
+            end += ")";
+        } else {
+            end += (this.getAttrName() + " ");
+            end += (this.getOp() + " ");
+            end += (this.getVal() + " ");
+        }
+        return end;
+    }
+
+    /**
+     * activate function
+     * @return String with all criteria attribute, including criteria name.
+     */
+    public String to(){
+        if(this.getCriName().equals("IsDocument")) return this.getCriName();
+        return this.getCriName() + " " +this.toString()+"\n";
+    }
+
 
 }

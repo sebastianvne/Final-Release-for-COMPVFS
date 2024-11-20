@@ -14,6 +14,14 @@ public class CVFS
     final private Stack<Criteria> trashCriteriaStack = new Stack<>();
 
     /**
+     * return the criteria hashmap of the CVFS object;
+     * @return return a hashmap
+     */
+    public HashMap<String, Criteria> getcri(){
+        return this.criteriaMap;
+    }
+
+    /**
      * return the disk of cvfs
      * @return Class Disk, the disk of cvfs.
      */
@@ -281,7 +289,7 @@ public class CVFS
             case "changedir":
                 File lastDir = currentDisk.getCwd();
                 if(cmds.length == 1) currentDisk.changeDirectory("");
-                if(cmds.length == 2)currentDisk.changeDirectory(cmds[1]);
+                else if(cmds.length == 2)currentDisk.changeDirectory(cmds[1]);
                 else throw new IllegalArgumentException("Too much arguments.");
                 if(!rec)
                 {
@@ -298,7 +306,7 @@ public class CVFS
             case "save":
                 if(cmds.length==1) throw new IllegalArgumentException("Requires a local path");
                 else if(cmds.length==3){
-                    if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
+                    if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion " + cmds[2] + " does not exist");
                     Map<String,File> filemap=currentDisk.rList(0,true,criteriaMap.get(cmds[2]));
                     System.out.println(currentDisk.rList(0,true,criteriaMap.get(cmds[2])));
                     System.out.println(filemap);
@@ -327,7 +335,7 @@ public class CVFS
                 break;
             case "newsimplecri":
                 if(cmds.length != 5 && cmds.length != 2) throw new IllegalArgumentException("Invalid input for NewSimpleCri");
-                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " already exists");
                 else if(cmds.length == 2){
                     Criteria criteria = new Criteria(cmds[1]);
                     criteriaMap.put(cmds[1],criteria);
@@ -345,8 +353,8 @@ public class CVFS
                 break;
             case "newnegation":
                 if(cmds.length != 3) throw new IllegalArgumentException("NewNegation requires at least two arguments");
-                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
-                if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " already exists");
+                if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion " + cmds[2] + " does not exist");
                 Criteria output = Criteria.newNegation(cmds[1],criteriaMap.get(cmds[2]));
                 criteriaMap.put(cmds[1],output);
                 System.out.println("New negation criteria created.");
@@ -354,9 +362,15 @@ public class CVFS
                 break;
             case "newbinarycri":
                 if(cmds.length != 5) throw new IllegalArgumentException("NewBinaryCri requires at least four arguments");
+<<<<<<< Updated upstream
                 if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " already exists");
                 if(！criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion" + cmds[2] + " does not exist");
                 else if(！criteriaMap.containsKey(cmds[4])) throw new IllegalArgumentException("The criterion" + cmds[4] + " does not exist");
+=======
+                if(criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " already exists");
+                if(!criteriaMap.containsKey(cmds[2])) throw new IllegalArgumentException("The criterion "+ cmds[2] + " does not exist");
+                else if(!criteriaMap.containsKey(cmds[4])) throw new IllegalArgumentException("The criterion " + cmds[4] + " does not exist");
+>>>>>>> Stashed changes
                 Criteria cri3 = criteriaMap.get(cmds[2]),cri4 = criteriaMap.get(cmds[4]);
                 Criteria newcri = Criteria.newBinaryCri(cmds[1],cri3,cmds[3],cri4);
                 criteriaMap.put(cmds[1],newcri);
@@ -365,18 +379,18 @@ public class CVFS
             case "printallcriteria":
                 if(cmds.length != 1) throw new IllegalArgumentException("PrintAllCriteria should have no arguments");
                 for(Criteria criteria : criteriaMap.values()){
-                    criteria.printAllCriteria();
+                    criteria.to();
                 }
                 break;
             case "search":
                 if(cmds.length != 2) throw new IllegalArgumentException("Search requires one argument");
-                if(!criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " does not exist");//?
+                if(!criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " does not exist");//?
                 currentDisk.rList(0,false,criteriaMap.get(cmds[1]));
                 //System.out.println("Total number of files: "+ criSearch[0]+", total size:"+(criSearch[1]-40));
                 break;
             case "rsearch":
                 if(cmds.length != 2) throw new IllegalArgumentException("Search requires one argument");
-                if(!criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion" + cmds[1] + " does not exist");//?
+                if(!criteriaMap.containsKey(cmds[1])) throw new IllegalArgumentException("The criterion " + cmds[1] + " does not exist");//?
                 currentDisk.rList(0,true,criteriaMap.get(cmds[1]));
                 //System.out.println("Total number of files: "+ criSearchAll[0]+", total size:"+(criSearchAll[1]-40));
                 break;
